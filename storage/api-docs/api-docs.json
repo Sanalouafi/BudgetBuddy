@@ -17,11 +17,13 @@
                 "responses": {
                     "200": {
                         "description": "List of expenses"
-                    },
-                    "404": {
-                        "description": "No expense found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -59,11 +61,13 @@
                 "responses": {
                     "201": {
                         "description": "Expense created"
-                    },
-                    "422": {
-                        "description": "Validation error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/expenses/{expense}": {
@@ -88,11 +92,13 @@
                 "responses": {
                     "200": {
                         "description": "Expense details"
-                    },
-                    "404": {
-                        "description": "Expense not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -141,14 +147,13 @@
                 "responses": {
                     "200": {
                         "description": "Expense updated"
-                    },
-                    "404": {
-                        "description": "Expense not found"
-                    },
-                    "422": {
-                        "description": "Validation error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -171,12 +176,29 @@
                 "responses": {
                     "204": {
                         "description": "Expense deleted"
-                    },
-                    "404": {
-                        "description": "Expense not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         }
-    }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "sanctum": []
+        }
+    ]
 }

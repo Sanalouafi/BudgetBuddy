@@ -7,6 +7,13 @@ use App\Http\Resources\ExpenseResource;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Info(
+ *    title="Expense API",
+ *   version="1.0.0",
+ *  description="API to manage expenses",
+ * )
+ */
 class ExpenseController extends Controller
 {
     /**
@@ -15,8 +22,8 @@ class ExpenseController extends Controller
      *     tags={"Expenses"},
      *     summary="Get all expenses",
      *     description="Retrieve a list of all expenses",
+     *     security={{"sanctum": {}}},
      *     @OA\Response(response="200", description="List of expenses"),
-     *     @OA\Response(response="404", description="No expense found"),
      * )
      */
     public function index(Request $request)
@@ -38,6 +45,7 @@ class ExpenseController extends Controller
      *     tags={"Expenses"},
      *     summary="Create a new expense",
      *     description="Create a new expense record",
+     *     security={{"sanctum": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         description="Expense data",
@@ -50,7 +58,6 @@ class ExpenseController extends Controller
      *         ),
      *     ),
      *     @OA\Response(response="201", description="Expense created"),
-     *     @OA\Response(response="422", description="Validation error"),
      * )
      */
     public function store(Request $request)
@@ -63,7 +70,7 @@ class ExpenseController extends Controller
             'amount' => $request->amount,
             'user_id' => $userId,
         ]);
-        return response()->json($expense,201);
+        return response()->json($expense, 201);
     }
 
     /**
@@ -72,6 +79,7 @@ class ExpenseController extends Controller
      *     tags={"Expenses"},
      *     summary="Get a specific expense",
      *     description="Retrieve a specific expense by ID",
+     *     security={{"sanctum": {}}},
      *     @OA\Parameter(
      *         name="expense",
      *         in="path",
@@ -80,7 +88,6 @@ class ExpenseController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="200", description="Expense details"),
-     *     @OA\Response(response="404", description="Expense not found"),
      * )
      */
     public function show(Expense $expense)
@@ -100,6 +107,7 @@ class ExpenseController extends Controller
      *     tags={"Expenses"},
      *     summary="Update an existing expense",
      *     description="Update an existing expense record",
+     *      security={{"sanctum": {}}},
      *     @OA\Parameter(
      *         name="expense",
      *         in="path",
@@ -119,8 +127,6 @@ class ExpenseController extends Controller
      *         ),
      *     ),
      *     @OA\Response(response="200", description="Expense updated"),
-     *     @OA\Response(response="404", description="Expense not found"),
-     *     @OA\Response(response="422", description="Validation error"),
      * )
      */
     public function update(Request $request, Expense $expense)
@@ -131,7 +137,7 @@ class ExpenseController extends Controller
             'description' => $request->description,
             'amount' => $request->amount,
         ]);
-        return response()->json($expense);
+        return response()->json($expense, 200);
     }
 
     /**
@@ -140,6 +146,7 @@ class ExpenseController extends Controller
      *     tags={"Expenses"},
      *     summary="Delete an existing expense",
      *     description="Delete an existing expense record",
+     *      security={{"sanctum": {}}},
      *     @OA\Parameter(
      *         name="expense",
      *         in="path",
@@ -148,7 +155,6 @@ class ExpenseController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response="204", description="Expense deleted"),
-     *     @OA\Response(response="404", description="Expense not found"),
      * )
      */
     public function destroy(Expense $expense)
